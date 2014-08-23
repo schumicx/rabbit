@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/push_list"
+        android:icon="@drawable/ic_launcher"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="100"/>
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_launcher"
+        android:orderInCategory="200"
+        android:showAsAction="always"
+        android:title="200"/>
+    <item
+        android:id="@+id/action_ancellation"
+        android:icon="@drawable/ic_launcher"
+        android:orderInCategory="300"
+        android:showAsAction="never|withText"
+        android:title="300"/>
+    <item
+        android:id="@+id/check_for_update"
+        android:icon="@drawable/ic_launcher"
+        android:orderInCategory="400"
+        android:showAsAction="never|withText"
+        android:title="400"/>
+
+</menu>
