@@ -7,7 +7,7 @@ import butterknife.ButterKnife.Finder;
 public class PhotoViewFragment$$ViewInjector {
   public static void inject(Finder finder, final ml.rabbit.frame.ui.test.PhotoViewFragment target, Object source) {
     View view;
-    view = finder.findRequiredView(source, 2131361834, "field 'photoView'");
+    view = finder.findRequiredView(source, 2131361825, "field 'photoView'");
     target.photoView = (uk.co.senab.photoview.PhotoView) view;
   }
 

@@ -7,9 +7,7 @@ import butterknife.ButterKnife.Finder;
 public class MainActivity$$ViewInjector {
   public static void inject(Finder finder, final ml.rabbit.frame.ui.MainActivity target, Object source) {
     View view;
-    view = finder.findRequiredView(source, 2131361806, "field 'mDrawerLayout'");
-    target.mDrawerLayout = (android.support.v4.widget.DrawerLayout) view;
-    view = finder.findRequiredView(source, 2131361808, "field 'listView' and method 'onItemClick'");
+    view = finder.findRequiredView(source, 2131361799, "field 'listView' and method 'onItemClick'");
     target.listView = (android.widget.ListView) view;
     ((android.widget.AdapterView<?>) view).setOnItemClickListener(
       new android.widget.AdapterView.OnItemClickListener() {
@@ -22,10 +20,12 @@ public class MainActivity$$ViewInjector {
           target.onItemClick(p2);
         }
       });
+    view = finder.findRequiredView(source, 2131361797, "field 'mDrawerLayout'");
+    target.mDrawerLayout = (android.support.v4.widget.DrawerLayout) view;
   }
 
   public static void reset(ml.rabbit.frame.ui.MainActivity target) {
-    target.mDrawerLayout = null;
     target.listView = null;
+    target.mDrawerLayout = null;
   }
 }

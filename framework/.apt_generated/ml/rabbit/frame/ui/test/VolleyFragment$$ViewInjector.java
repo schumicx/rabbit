@@ -7,7 +7,7 @@ import butterknife.ButterKnife.Finder;
 public class VolleyFragment$$ViewInjector {
   public static void inject(Finder finder, final ml.rabbit.frame.ui.test.VolleyFragment target, Object source) {
     View view;
-    view = finder.findRequiredView(source, 2131361839, "field 'textview'");
+    view = finder.findRequiredView(source, 2131361851, "field 'textview'");
     target.textview = (android.widget.TextView) view;
   }
 

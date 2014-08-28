@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="animation_list">
+        <item>"Fade"</item>
+        <item>"Fly"</item>
+        <item>"Pop"</item>
+        <item>"Scale"</item>
+    </array>
+    <array name="duration_list">
+        <item>"Short"</item>
+        <item>"Medium"</item>
+        <item>"Long"</item>
+    </array>
+    <array name="background_list">
+        <item>"Black"</item>
+        <item>"Grey"</item>
+        <item>"Green"</item>
+        <item>"Blue"</item>
+        <item>"Red"</item>
+        <item>"Purple"</item>
+        <item>"Orange"</item>
+    </array>
+    <array name="text_size_list">
+        <item>"Small"</item>
+        <item>"Medium"</item>
+        <item>"Large"</item>
+    </array>
+    <array name="dismiss_function_list">
+        <item>"None"</item>
+        <item>"Swipe"</item>
+        <item>"Touch"</item>
+    </array>
+
+</resources>

@@ -11,6 +11,7 @@ import butterknife.ButterKnife;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.squareup.picasso.Picasso;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.PushAgent;
 import com.umeng.update.UpdateConfig;
@@ -40,6 +41,7 @@ public class ApplicationController extends Application {
 		PushAgent.getInstance(this).setDebugMode(BuildConfig.DEBUG);
 		MobclickAgent.setDebugMode(BuildConfig.DEBUG);
 		UpdateConfig.setDebug(BuildConfig.DEBUG);
+		Picasso.with(this).setIndicatorsEnabled(BuildConfig.DEBUG);
 		
 		// initialize the singleton
 		sInstance = this;

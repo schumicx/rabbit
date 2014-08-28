@@ -3,13 +3,20 @@ package ml.rabbit.frame.ui;
 import ml.rabbit.frame.R;
 import ml.rabbit.frame.ui.test.CircleImageFragment;
 import ml.rabbit.frame.ui.test.DateTimePickersFragment;
+import ml.rabbit.frame.ui.test.FragmentSuperActivityToast;
+import ml.rabbit.frame.ui.test.FragmentSuperCardToast;
+import ml.rabbit.frame.ui.test.FragmentSuperToast;
 import ml.rabbit.frame.ui.test.PageFragment;
 import ml.rabbit.frame.ui.test.PhotoViewFragment;
+import ml.rabbit.frame.ui.test.PicassoFragment;
+import ml.rabbit.frame.ui.test.PulltorefreshFragment;
 import ml.rabbit.frame.ui.test.QuickContactFragment;
 import ml.rabbit.frame.ui.test.SaripaarFragment;
+import ml.rabbit.frame.ui.test.ViewpagerFragment;
 import ml.rabbit.frame.ui.test.VolleyFragment;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -39,19 +46,50 @@ public class MainActivity extends BaseActivity implements DrawerListener {
 
 	@OnItemClick(R.id.left_drawer)
 	void onItemClick(int position) {
+		getActionBar().setDisplayShowTitleEnabled(true);
+		getActionBar().setDisplayShowHomeEnabled(true);
+		getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+		
 		Fragment fragment = null;
 		switch (position) {
 		case 0:
-
+			fragment = PulltorefreshFragment.newInstance();
 			break;
 		case 1:
 			fragment = DateTimePickersFragment.newInstance();
 			break;
 		case 2:
+			getActionBar().setDisplayShowTitleEnabled(false);
+			getActionBar().setDisplayShowHomeEnabled(false);
+			getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 
+	        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
+	                android.R.layout.simple_dropdown_item_1line, android.R.id.text1, new String[]{"SuperToast", "SuperActivityToast", "SuperCardToast"});
+	        arrayAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+	        getActionBar().setListNavigationCallbacks(arrayAdapter, new ActionBar.OnNavigationListener() {
+	            @Override
+	            public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+	            	Fragment fragment = null;
+	                switch (itemPosition) {
+	                    case 0:
+	                        fragment = new FragmentSuperToast();
+	                        break;
+	                    case 1:
+	                        fragment = new FragmentSuperActivityToast();
+	                        break;
+	                    case 2:
+	                        fragment = new FragmentSuperCardToast();
+	                        break;
+	                }
+	                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+	                fragmentTransaction.replace(R.id.framelayout, fragment);
+	                fragmentTransaction.commit();
+	                return false;
+	            }
+	        });
 			break;
 		case 3:
-
+			fragment = ViewpagerFragment.newInstance();
 			break;
 		case 4:
 			fragment = PhotoViewFragment.newInstance();
@@ -60,7 +98,7 @@ public class MainActivity extends BaseActivity implements DrawerListener {
 			fragment = CircleImageFragment.newInstance();
 			break;
 		case 6:
-
+			fragment = PicassoFragment.newInstance();
 			break;
 		case 7:
 			fragment = PageFragment.newInstance();
@@ -118,8 +156,8 @@ public class MainActivity extends BaseActivity implements DrawerListener {
 				.getIdentifier("action_bar_subtitle", "id", "android"));
 		subTitle.setTextColor(Color.WHITE);
 
-		getActionBar().setBackgroundDrawable(new ColorDrawable(0xff33B5E6));
-
+		getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(android.R.color.holo_blue_light)));
+		
 		mDrawerLayout.setDrawerListener(this);
 
 		listView.setAdapter(new ArrayAdapter<String>(this,

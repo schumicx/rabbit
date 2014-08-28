@@ -5,7 +5,7 @@ import ml.rabbit.frame.support.pagerslidingtabstrip.PagerSlidingTabStrip;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
-import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -42,7 +42,7 @@ public class PageFragment extends Fragment {
 		View view = inflater.inflate(R.layout.test_page_fragment, container,
 				false);
 		ButterKnife.inject(this, view);
-		
+
 		adapter = new MyPagerAdapter(getFragmentManager());
 		pager.setAdapter(adapter);
 		tabs.setViewPager(pager);
@@ -50,7 +50,7 @@ public class PageFragment extends Fragment {
 		return view;
 	}
 
-	public class MyPagerAdapter extends FragmentPagerAdapter {
+	private class MyPagerAdapter extends FragmentStatePagerAdapter {
 
 		private final String[] TITLES = { "tab1", "tab2", "tab3", "tab4",
 				"tab5", "tab6", "tab7", "tab8" };
@@ -76,39 +76,39 @@ public class PageFragment extends Fragment {
 
 	}
 
-}
+	static class SuperAwesomeCardFragment extends Fragment {
 
-class SuperAwesomeCardFragment extends Fragment {
+		private static final String ARG_POSITION = "position";
 
-	private static final String ARG_POSITION = "position";
+		private int position;
 
-	private int position;
+		public static SuperAwesomeCardFragment newInstance(int position) {
+			SuperAwesomeCardFragment f = new SuperAwesomeCardFragment();
+			Bundle b = new Bundle();
+			b.putInt(ARG_POSITION, position);
+			f.setArguments(b);
+			return f;
+		}
 
-	public static SuperAwesomeCardFragment newInstance(int position) {
-		SuperAwesomeCardFragment f = new SuperAwesomeCardFragment();
-		Bundle b = new Bundle();
-		b.putInt(ARG_POSITION, position);
-		f.setArguments(b);
-		return f;
-	}
+		@Override
+		public void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+			position = getArguments().getInt(ARG_POSITION);
+		}
 
-		position = getArguments().getInt(ARG_POSITION);
-	}
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+			FrameLayout fl = new FrameLayout(getActivity());
+			TextView v = new TextView(getActivity());
+			v.setGravity(Gravity.CENTER);
+			v.setText("CARD " + (position + 1));
+			fl.addView(v);
+			return fl;
+		}
 
-		FrameLayout fl = new FrameLayout(getActivity());
-		TextView v = new TextView(getActivity());
-		v.setGravity(Gravity.CENTER);
-		v.setText("CARD " + (position + 1));
-		fl.addView(v);
-		return fl;
 	}
 
 }
