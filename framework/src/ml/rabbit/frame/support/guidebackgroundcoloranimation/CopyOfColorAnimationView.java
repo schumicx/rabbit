@@ -12,7 +12,7 @@ import android.view.View;
 /**
  * Created by TaurusXi on 2014/5/20.
  */
-public class ColorAnimationView extends View implements
+public class CopyOfColorAnimationView extends View implements
 		ValueAnimator.AnimatorUpdateListener, Animator.AnimatorListener {
 	private static final int RED = 0xffFF0000;
 	private static final int BLUE = 0xff0000FF;
@@ -23,10 +23,6 @@ public class ColorAnimationView extends View implements
 
 	private PageChangeListener mPageChangeListener;
 
-	public PageChangeListener getmPageChangeListener() {
-		return mPageChangeListener;
-	}
-
 	ViewPager.OnPageChangeListener onPageChangeListener;
 
 	public void setOnPageChangeListener(
@@ -34,6 +30,31 @@ public class ColorAnimationView extends View implements
 		this.onPageChangeListener = onPageChangeListener;
 	}
 
+	/**
+	 * 这是你唯一需要关心的方法
+	 * 
+	 * @param mViewPager
+	 *            你必须在设置 Viewpager 的 Adapter 这后，才能调用这个方法。
+	 * @param obj
+	 *            ,这个obj实现了 ColorAnimationView.OnPageChangeListener ，实现回调
+	 * @param count
+	 *            ,viewpager孩子的数量
+	 * @param colors
+	 *            int... colors ，你需要设置的颜色变化值~~ 如何你传人 空，那么触发默认设置的颜色动画
+	 * */
+	/**
+	 * This is the only method you need care about.
+	 * 
+	 * @param mViewPager
+	 *            ,you need set the adpater before you call this.
+	 * @param count
+	 *            ,this param set the count of the viewpaper's child
+	 * @param colors
+	 *            ,this param set the change color use (int... colors), so,you
+	 *            could set any length if you want.And by default. if you set
+	 *            nothing , don't worry i have already creat a default good
+	 *            change color!
+	 * */
 	public void setViewPager(ViewPager mViewPager, int count, int... colors) {
 		if (mViewPager.getAdapter() == null) {
 			throw new IllegalStateException(
@@ -46,19 +67,18 @@ public class ColorAnimationView extends View implements
 		} else {
 			createAnimation(colors);
 		}
-		invalidate();
 	}
 
-	public ColorAnimationView(Context context) {
+	public CopyOfColorAnimationView(Context context) {
 		this(context, null, 0);
 
 	}
 
-	public ColorAnimationView(Context context, AttributeSet attrs) {
+	public CopyOfColorAnimationView(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
 	}
 
-	public ColorAnimationView(Context context, AttributeSet attrs,
+	public CopyOfColorAnimationView(Context context, AttributeSet attrs,
 			int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 		mPageChangeListener = new PageChangeListener();
@@ -113,7 +133,7 @@ public class ColorAnimationView extends View implements
 		// long playtime = colorAnim.getCurrentPlayTime();
 	}
 
-	public class PageChangeListener implements ViewPager.OnPageChangeListener {
+	private class PageChangeListener implements ViewPager.OnPageChangeListener {
 
 		private int viewPagerChildCount;
 
@@ -133,7 +153,7 @@ public class ColorAnimationView extends View implements
 			if (count != 0) {
 				float length = (position + positionOffset) / count;
 				int progress = (int) (length * DURATION);
-				ColorAnimationView.this.seek(progress);
+				CopyOfColorAnimationView.this.seek(progress);
 			}
 			// call the method by default
 			if (onPageChangeListener != null) {

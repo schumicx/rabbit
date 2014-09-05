@@ -24,9 +24,6 @@ import java.util.LinkedList;
  */
 class ManagerSuperCardToast {
 
-    @SuppressWarnings("UnusedDeclaration")
-    private static final String TAG = "Manager SuperCardToast";
-
     private static ManagerSuperCardToast mManagerSuperCardToast;
 
     private final LinkedList<SuperCardToast> mList;

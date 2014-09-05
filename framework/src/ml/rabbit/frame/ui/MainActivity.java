@@ -1,6 +1,7 @@
 package ml.rabbit.frame.ui;
 
 import ml.rabbit.frame.R;
+import ml.rabbit.frame.support.utils.DeviceUtils;
 import ml.rabbit.frame.ui.test.CircleImageFragment;
 import ml.rabbit.frame.ui.test.DateTimePickersFragment;
 import ml.rabbit.frame.ui.test.FragmentSuperActivityToast;
@@ -17,10 +18,9 @@ import ml.rabbit.frame.ui.test.VolleyFragment;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -30,11 +30,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnItemClick;
 
+import com.github.johnpersano.supertoasts.SuperToast;
 import com.umeng.message.PushAgent;
 
 public class MainActivity extends BaseActivity implements DrawerListener {
@@ -49,7 +49,7 @@ public class MainActivity extends BaseActivity implements DrawerListener {
 		getActionBar().setDisplayShowTitleEnabled(true);
 		getActionBar().setDisplayShowHomeEnabled(true);
 		getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-		
+
 		Fragment fragment = null;
 		switch (position) {
 		case 0:
@@ -63,30 +63,37 @@ public class MainActivity extends BaseActivity implements DrawerListener {
 			getActionBar().setDisplayShowHomeEnabled(false);
 			getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 
-	        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
-	                android.R.layout.simple_dropdown_item_1line, android.R.id.text1, new String[]{"SuperToast", "SuperActivityToast", "SuperCardToast"});
-	        arrayAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-	        getActionBar().setListNavigationCallbacks(arrayAdapter, new ActionBar.OnNavigationListener() {
-	            @Override
-	            public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-	            	Fragment fragment = null;
-	                switch (itemPosition) {
-	                    case 0:
-	                        fragment = new FragmentSuperToast();
-	                        break;
-	                    case 1:
-	                        fragment = new FragmentSuperActivityToast();
-	                        break;
-	                    case 2:
-	                        fragment = new FragmentSuperCardToast();
-	                        break;
-	                }
-	                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-	                fragmentTransaction.replace(R.id.framelayout, fragment);
-	                fragmentTransaction.commit();
-	                return false;
-	            }
-	        });
+			ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
+					android.R.layout.simple_dropdown_item_1line,
+					android.R.id.text1, new String[] { "SuperToast",
+							"SuperActivityToast", "SuperCardToast" });
+			arrayAdapter
+					.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+			getActionBar().setListNavigationCallbacks(arrayAdapter,
+					new ActionBar.OnNavigationListener() {
+						@Override
+						public boolean onNavigationItemSelected(
+								int itemPosition, long itemId) {
+							Fragment fragment = null;
+							switch (itemPosition) {
+							case 0:
+								fragment = new FragmentSuperToast();
+								break;
+							case 1:
+								fragment = new FragmentSuperActivityToast();
+								break;
+							case 2:
+								fragment = new FragmentSuperCardToast();
+								break;
+							}
+							FragmentTransaction fragmentTransaction = getFragmentManager()
+									.beginTransaction();
+							fragmentTransaction.replace(R.id.framelayout,
+									fragment);
+							fragmentTransaction.commit();
+							return false;
+						}
+					});
 			break;
 		case 3:
 			fragment = ViewpagerFragment.newInstance();
@@ -143,21 +150,28 @@ public class MainActivity extends BaseActivity implements DrawerListener {
 		setContentView(R.layout.activity_main);
 		ButterKnife.inject(this);
 
+		SharedPreferences preferences = getSharedPreferences("FIRST", MODE_PRIVATE);
+		if (preferences.getBoolean(String.valueOf(DeviceUtils.getPackageCode(this)), true)) {
+			Editor editor = preferences.edit();
+			editor.putBoolean(String.valueOf(DeviceUtils.getPackageCode(this)), false);
+			editor.commit();
+		}
+		
 		PushAgent.getInstance(this).enable();
 
 		// getActionBar().setTitle("主标题");
-		getActionBar().setSubtitle("副标题");
+		// getActionBar().setSubtitle("副标题");
 
-		TextView title = (TextView) findViewById(Resources.getSystem()
-				.getIdentifier("action_bar_title", "id", "android"));
-		title.setTextColor(Color.WHITE);
+		// TextView title = (TextView)
+		// findViewById(Resources.getSystem().getIdentifier("action_bar_title",
+		// "id", "android"));
+		// title.setTextColor(Color.WHITE);
+		// TextView subTitle = (TextView)
+		// findViewById(Resources.getSystem().getIdentifier("action_bar_subtitle",
+		// "id", "android"));
+		// subTitle.setTextColor(Color.WHITE);
+		// getActionBar().setBackgroundDrawable(new ColorDrawable(0xff00bcd4));
 
-		TextView subTitle = (TextView) findViewById(Resources.getSystem()
-				.getIdentifier("action_bar_subtitle", "id", "android"));
-		subTitle.setTextColor(Color.WHITE);
-
-		getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(android.R.color.holo_blue_light)));
-		
 		mDrawerLayout.setDrawerListener(this);
 
 		listView.setAdapter(new ArrayAdapter<String>(this,
@@ -277,6 +291,18 @@ public class MainActivity extends BaseActivity implements DrawerListener {
 	public void onDrawerClosed(View drawerView) {
 		mDrawerToggle.onDrawerClosed(drawerView);
 		mActionBar.onDrawerClosed();
+	}
+
+	private static long back_pressed;
+
+	@Override
+	public void onBackPressed() {
+		if (back_pressed + 2000 > System.currentTimeMillis()) {
+			super.onBackPressed();
+		} else {
+			SuperToast.create(getBaseContext(), "再按一次退出", SuperToast.Duration.SHORT).show();
+		}
+		back_pressed = System.currentTimeMillis();
 	}
 
 }
