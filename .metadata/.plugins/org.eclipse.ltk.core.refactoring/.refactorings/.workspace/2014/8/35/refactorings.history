@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Delete 7 resources" deleteContents="false" description="Delete 7 resources" element1="/actionbarpulltorefresh_libs" element2="/framework" element3="/googledatetimepickers_libs" element4="/photoview_libs" element5="/smoothprogressbar_libs" element6="/supertoasts_libs" element7="/viewpagerindicator_libs" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="7" stamp="1408935381508"/>
-</session>
